@@ -1,0 +1,18 @@
+{
+  "manifest_version": 3,
+  "name": "Auto-Close Tabs",
+  "version": "1.0",
+  "description": "Automatically closes tabs that have been open for more than one hour.",
+  "permissions": ["tabs", "alarms"],
+  "background": {
+    "service_worker": "closetabs.js"
+  },
+  "icons": {
+    "16": "icon48.png",
+    "48": "icon48.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": "icon48.png"
+  }
+}
