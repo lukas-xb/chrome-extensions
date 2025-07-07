@@ -20,7 +20,7 @@ chrome.runtime.onInstalled.addListener(() => {
   });
 });
 
-chrome.contextMenus.onClicked.addListener((info, tab) => {
+chrome.contextMenus.onClicked.addListener((info) => {
   if (info.menuItemId === "scrapeToMarkdown") {
     // Open popup or trigger scraping directly
     chrome.action.openPopup();

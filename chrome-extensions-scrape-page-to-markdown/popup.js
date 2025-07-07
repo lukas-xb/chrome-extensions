@@ -76,123 +76,110 @@ document.addEventListener("DOMContentLoaded", function () {
     };
 
     chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-      chrome.tabs.sendMessage(
-        tabs[0].id,
-        {
-          action: "scrapeContent",
-          options: options,
-          isPreview: isPreview,
-        },
-        function (response) {
-          if (chrome.runtime.lastError) {
-            status.textContent = "Error: " + chrome.runtime.lastError.message;
-            return;
-          }
+      if (!tabs[0]) {
+        status.textContent = "Error: No active tab found";
+        return;
+      }
 
-          if (response && response.success) {
-            if (isPreview) {
-              // Open preview in a new window
-              const previewWindow = window.open(
-                "",
-                "_blank",
-                "width=800,height=600,scrollbars=yes"
-              );
-              previewWindow.document.write(`
-              <!DOCTYPE html>
-              <html lang="en">
-              <head>
-                <meta charset="UTF-8">
-                <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                <title>Markdown Preview</title>
-                <style>
-                  body { 
-                    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-                    max-width: 800px; 
-                    margin: 0 auto; 
-                    padding: 20px; 
-                    line-height: 1.6;
-                    background: #f5f5f5;
-                  }
-                  .container {
-                    background: white;
-                    padding: 30px;
-                    border-radius: 8px;
-                    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-                  }
-                  pre { 
-                    background: #f8f9fa; 
-                    padding: 15px; 
-                    border-radius: 5px; 
-                    overflow-x: auto;
-                    border-left: 4px solid #007acc;
-                    white-space: pre-wrap;
-                    word-wrap: break-word;
-                  }
-                  h1 { color: #333; border-bottom: 2px solid #007acc; padding-bottom: 10px; }
-                  .actions {
-                    margin-bottom: 20px;
-                    text-align: center;
-                  }
-                  button {
-                    background: #007acc;
-                    color: white;
-                    border: none;
-                    padding: 10px 20px;
-                    border-radius: 5px;
-                    cursor: pointer;
-                    margin: 0 5px;
-                  }
-                  button:hover { background: #005a9e; }
-                </style>
-              </head>
-              <body>
-                <div class="container">
-                  <h1>📝 Markdown Preview</h1>
-                  <div class="actions">
-                    <button onclick="copyToClipboard()">📋 Copy to Clipboard</button>
-                    <button onclick="downloadFile()">💾 Download File</button>
-                  </div>
-                  <pre id="markdown-content">${response.markdown
-                    .replace(/</g, "&lt;")
-                    .replace(/>/g, "&gt;")}</pre>
-                </div>
-                <script>
-                  const markdownContent = ${JSON.stringify(response.markdown)};
-                  const filename = ${JSON.stringify(options.filename)};
-                  
-                  function copyToClipboard() {
-                    navigator.clipboard.writeText(markdownContent).then(() => {
-                      alert('Markdown copied to clipboard!');
+      const tabId = tabs[0].id;
+
+      // Check if we can access the tab (some pages like chrome:// are restricted)
+      if (
+        tabs[0].url &&
+        (tabs[0].url.startsWith("chrome://") ||
+          tabs[0].url.startsWith("chrome-extension://") ||
+          tabs[0].url.startsWith("edge://") ||
+          tabs[0].url.startsWith("about:"))
+      ) {
+        status.textContent = "Error: Cannot access this type of page";
+        return;
+      }
+
+      // Function to send message and handle response
+      function sendMessage() {
+        chrome.tabs.sendMessage(
+          tabId,
+          {
+            action: "scrapeContent",
+            options: options,
+            isPreview: isPreview,
+          },
+          function (response) {
+            if (chrome.runtime.lastError) {
+              console.error("Message error:", chrome.runtime.lastError);
+              status.textContent = "Error: " + chrome.runtime.lastError.message;
+              return;
+            }
+
+            if (response && response.success) {
+              if (isPreview) {
+                // Store data temporarily and open preview page
+                chrome.storage.local.set(
+                  {
+                    previewData: {
+                      markdown: response.markdown,
+                      filename: options.filename,
+                      timestamp: Date.now(),
+                    },
+                  },
+                  function () {
+                    // Open preview page using chrome.tabs.create for better security
+                    chrome.tabs.create({
+                      url: chrome.runtime.getURL("preview.html"),
+                      active: true,
                     });
                   }
-                  
-                  function downloadFile() {
-                    const blob = new Blob([markdownContent], { type: 'text/markdown' });
-                    const url = URL.createObjectURL(blob);
-                    const a = document.createElement('a');
-                    a.href = url;
-                    a.download = filename + '.md';
-                    a.click();
-                    URL.revokeObjectURL(url);
+                );
+                status.textContent = "Preview opened!";
+              } else {
+                // Use direct download with blob URL
+                const blob = new Blob([response.markdown], {
+                  type: "text/markdown",
+                });
+                const url = URL.createObjectURL(blob);
+
+                chrome.downloads.download(
+                  {
+                    url: url,
+                    filename: options.filename + ".md",
+                    saveAs: true,
+                  },
+                  function (downloadId) {
+                    if (chrome.runtime.lastError) {
+                      status.textContent =
+                        "Download error: " + chrome.runtime.lastError.message;
+                    } else {
+                      status.textContent = "Download started!";
+                    }
+                    // Clean up the blob URL
+                    setTimeout(() => URL.revokeObjectURL(url), 100);
                   }
-                </script>
-              </body>
-              </html>
-            `);
-              status.textContent = "Preview opened!";
+                );
+              }
             } else {
-              // Download the file
-              chrome.downloads.download({
-                url: response.downloadUrl,
-                filename: options.filename + ".md",
-                saveAs: true,
-              });
-              status.textContent = "Download started!";
+              status.textContent =
+                "Error: " + (response?.error || "Failed to scrape content");
             }
-          } else {
-            status.textContent =
-              "Error: " + (response?.error || "Failed to scrape content");
           }
+        );
+      }
+
+      // Try to inject the content script first, then send message
+      chrome.scripting.executeScript(
+        {
+          target: { tabId: tabId },
+          files: ["content.js"],
+        },
+        function (injectionResults) {
+          if (chrome.runtime.lastError) {
+            console.log(
+              "Content script injection note:",
+              chrome.runtime.lastError.message
+            );
+          }
+
+          // Wait a bit for script to initialize, then send message
+          setTimeout(sendMessage, 100);
         }
       );
     });

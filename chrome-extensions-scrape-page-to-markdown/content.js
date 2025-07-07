@@ -283,6 +283,8 @@ class MarkdownConverter {
 
 // Listen for messages from popup
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+  console.log("Content script received message:", request);
+
   if (request.action === "scrapeContent") {
     try {
       const converter = new MarkdownConverter();
@@ -294,17 +296,14 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
           markdown: markdown,
         });
       } else {
-        // Create download URL
-        const blob = new Blob([markdown], { type: "text/markdown" });
-        const url = URL.createObjectURL(blob);
-
+        // For download, just send the markdown content
         sendResponse({
           success: true,
-          downloadUrl: url,
           markdown: markdown,
         });
       }
     } catch (error) {
+      console.error("Error in content script:", error);
       sendResponse({
         success: false,
         error: error.message,
@@ -314,3 +313,9 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 
   return true; // Keep message channel open for async response
 });
+
+// Signal that the content script is ready
+if (typeof window !== "undefined") {
+  window.markdownScraperReady = true;
+  console.log("Markdown scraper content script loaded");
+}
