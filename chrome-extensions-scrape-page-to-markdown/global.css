@@ -1,0 +1,265 @@
+/* Global CSS for Page to Markdown Extension */
+
+/* Base styles */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: system-ui, -apple-system, sans-serif;
+  margin: 0;
+  padding: 0;
+  line-height: 1.5;
+}
+
+/* Popup-specific styles */
+.popup-body {
+  width: 300px;
+  padding: 16px;
+  background: #f5f5f5;
+  color: #333;
+}
+
+.popup-container {
+  background: white;
+  border-radius: 8px;
+  padding: 20px;
+  border: 1px solid #ddd;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.popup-title {
+  margin: 0 0 16px 0;
+  font-size: 18px;
+  text-align: center;
+  font-weight: 600;
+  color: #333;
+}
+
+.option-group {
+  margin-bottom: 16px;
+}
+
+.option-label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #555;
+}
+
+.checkbox-input {
+  margin-right: 8px;
+}
+
+.text-input {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background: white;
+  color: #333;
+  font-size: 14px;
+}
+
+.text-input:focus {
+  outline: none;
+  border-color: #007acc;
+}
+
+.primary-button {
+  width: 100%;
+  padding: 12px;
+  background: #007acc;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  margin-bottom: 8px;
+}
+
+.primary-button:hover {
+  background: #005a9e;
+}
+
+.preview-button {
+  background: #28a745;
+}
+
+.preview-button:hover {
+  background: #218838;
+}
+
+.popup-status {
+  text-align: center;
+  margin-top: 8px;
+  font-size: 12px;
+  color: #666;
+}
+
+.checkbox-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Preview page styles */
+body {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px;
+  background: #f8f9fa;
+}
+
+.container {
+  background: white;
+  padding: 30px;
+  border-radius: 8px;
+  border: 1px solid #dee2e6;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #dee2e6;
+}
+
+.header h1 {
+  color: #333;
+  margin: 0;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.actions {
+  margin-bottom: 25px;
+  text-align: center;
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+button {
+  background: #007acc;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+button:hover {
+  background: #005a9e;
+}
+
+.download-btn {
+  background: #28a745;
+}
+
+.download-btn:hover {
+  background: #218838;
+}
+
+.close-btn {
+  background: #dc3545;
+}
+
+.close-btn:hover {
+  background: #c82333;
+}
+
+.markdown-container {
+  background: #f8f9fa;
+  padding: 20px;
+  border-radius: 4px;
+  border: 1px solid #dee2e6;
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
+.markdown-content {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+  font-size: 13px;
+  line-height: 1.4;
+  color: #333;
+  margin: 0;
+}
+
+.loading {
+  text-align: center;
+  padding: 40px;
+  color: #666;
+}
+
+.error {
+  text-align: center;
+  padding: 30px;
+  color: #dc3545;
+  background: #f8d7da;
+  border: 1px solid #f5c6cb;
+  border-radius: 4px;
+}
+
+.status {
+  text-align: center;
+  margin-top: 15px;
+  padding: 8px;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.status.success {
+  background: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+.status.error {
+  background: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+
+.status.hidden {
+  display: none;
+}
+
+.metadata {
+  background: #e9ecef;
+  padding: 15px;
+  border-radius: 4px;
+  margin-bottom: 20px;
+  font-size: 13px;
+  color: #666;
+}
+
+.metadata strong {
+  color: #333;
+}
+
+/* Scrollbar styling */
+.markdown-container::-webkit-scrollbar {
+  width: 8px;
+}
+
+.markdown-container::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.markdown-container::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 4px;
+}
+
+.markdown-container::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}

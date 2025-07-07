@@ -3,7 +3,14 @@
   "name": "Page to Markdown Scraper",
   "version": "1.0",
   "description": "Scrape page content and convert to markdown format for easy saving",
-  "permissions": ["activeTab", "downloads", "storage", "contextMenus"],
+  "permissions": [
+    "activeTab",
+    "downloads",
+    "storage",
+    "contextMenus",
+    "tabs",
+    "scripting"
+  ],
   "action": {
     "default_popup": "popup.html",
     "default_title": "Scrape to Markdown",
@@ -20,6 +27,12 @@
   "background": {
     "service_worker": "background.js"
   },
+  "web_accessible_resources": [
+    {
+      "resources": ["preview.html"],
+      "matches": ["<all_urls>"]
+    }
+  ],
   "icons": {
     "48": "icon48.png"
   }

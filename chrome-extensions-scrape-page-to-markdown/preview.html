@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Markdown Preview</title>
+  <link rel="stylesheet" href="global.css">
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>📝 Markdown Preview</h1>
+    </div>
+    
+    <div class="actions">
+      <button id="copyBtn">📋 Copy to Clipboard</button>
+      <button id="downloadBtn" class="download-btn">💾 Download File</button>
+      <button id="closeBtn" class="close-btn">✖️ Close</button>
+    </div>
+    
+    <div id="content">
+      <div class="loading">
+        <p>Loading preview...</p>
+      </div>
+    </div>
+    
+    <div id="status" class="status hidden"></div>
+  </div>
+  
+  <script src="preview.js"></script>
+</body>
+</html>

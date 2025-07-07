@@ -4,144 +4,47 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Page to Markdown Scraper</title>
-  <style>
-    body {
-      width: 300px;
-      padding: 16px;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      color: white;
-      margin: 0;
-    }
-    
-    .container {
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 12px;
-      padding: 20px;
-      -webkit-backdrop-filter: blur(10px);
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-    }
-    
-    h1 {
-      margin: 0 0 16px 0;
-      font-size: 18px;
-      text-align: center;
-      font-weight: 600;
-    }
-    
-    .option-group {
-      margin-bottom: 16px;
-    }
-    
-    label {
-      display: block;
-      margin-bottom: 8px;
-      font-size: 14px;
-      font-weight: 500;
-    }
-    
-    input[type="checkbox"] {
-      margin-right: 8px;
-      transform: scale(1.1);
-    }
-    
-    input[type="text"] {
-      width: 100%;
-      padding: 8px 12px;
-      border: none;
-      border-radius: 6px;
-      background: rgba(255, 255, 255, 0.9);
-      color: #333;
-      font-size: 14px;
-      box-sizing: border-box;
-    }
-    
-    button {
-      width: 100%;
-      padding: 12px;
-      background: #4CAF50;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      font-size: 16px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      margin-bottom: 8px;
-    }
-    
-    button:hover {
-      background: #45a049;
-      transform: translateY(-1px);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-    }
-    
-    button:active {
-      transform: translateY(0);
-    }
-    
-    .preview-btn {
-      background: #2196F3;
-    }
-    
-    .preview-btn:hover {
-      background: #1976D2;
-    }
-    
-    .status {
-      text-align: center;
-      margin-top: 8px;
-      font-size: 12px;
-      opacity: 0.8;
-    }
-    
-    .checkbox-group {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-  </style>
+  <link rel="stylesheet" href="global.css">
 </head>
-<body>
-  <div class="container">
-    <h1>📝 Page to Markdown</h1>
+<body class="popup-body">
+  <div class="popup-container">
+    <h1 class="popup-title">📝 Page to Markdown</h1>
     
     <div class="option-group">
-      <label>Filename:</label>
-      <input type="text" id="filename" placeholder="page-content" />
+      <label class="option-label">Filename:</label>
+      <input type="text" id="filename" class="text-input" placeholder="page-content" />
     </div>
     
     <div class="option-group">
-      <label>Include:</label>
+      <label class="option-label">Include:</label>
       <div class="checkbox-group">
-        <label>
-          <input type="checkbox" id="includeTitle" checked />
+        <label class="option-label">
+          <input type="checkbox" id="includeTitle" class="checkbox-input" checked />
           Page Title
         </label>
-        <label>
-          <input type="checkbox" id="includeUrl" checked />
+        <label class="option-label">
+          <input type="checkbox" id="includeUrl" class="checkbox-input" checked />
           Page URL
         </label>
-        <label>
-          <input type="checkbox" id="includeImages" checked />
+        <label class="option-label">
+          <input type="checkbox" id="includeImages" class="checkbox-input" checked />
           Images
         </label>
-        <label>
-          <input type="checkbox" id="includeLinks" checked />
+        <label class="option-label">
+          <input type="checkbox" id="includeLinks" class="checkbox-input" checked />
           Links
         </label>
-        <label>
-          <input type="checkbox" id="includeMeta" />
+        <label class="option-label">
+          <input type="checkbox" id="includeMeta" class="checkbox-input" />
           Meta Information
         </label>
       </div>
     </div>
     
-    <button id="previewBtn" class="preview-btn">👁️ Preview Markdown</button>
-    <button id="scrapeBtn">💾 Download as Markdown</button>
+    <button id="previewBtn" class="primary-button preview-button">👁️ Preview Markdown</button>
+    <button id="scrapeBtn" class="primary-button">💾 Download as Markdown</button>
     
-    <div id="status" class="status"></div>
+    <div id="status" class="popup-status"></div>
   </div>
   
   <script src="popup.js"></script>
