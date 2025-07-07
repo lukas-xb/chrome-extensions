@@ -1,6 +1,6 @@
 # Chrome extensions
 
-Contains extension utilities for Chromium-based browsers.
+Contains single-purpose extension utilities for Chromium-based browsers.
 
 ## Autoclose tabs
 
