@@ -1,0 +1,26 @@
+{
+  "manifest_version": 3,
+  "name": "Page to Markdown Scraper",
+  "version": "1.0",
+  "description": "Scrape page content and convert to markdown format for easy saving",
+  "permissions": ["activeTab", "downloads", "storage", "contextMenus"],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Scrape to Markdown",
+    "default_icon": {
+      "48": "icon48.png"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"]
+    }
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "icons": {
+    "48": "icon48.png"
+  }
+}
