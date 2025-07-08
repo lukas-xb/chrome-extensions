@@ -10,7 +10,6 @@ A powerful Chrome extension that scrapes web page content and converts it to cle
 - **Live Preview**: Preview the markdown before downloading
 - **Context Menu Integration**: Right-click to scrape any page
 - **Automatic Filename Generation**: Smart filename creation based on page title and domain
-- **Frontmatter Support**: Adds YAML frontmatter with metadata for better organization
 
 ## 🚀 Installation
 
