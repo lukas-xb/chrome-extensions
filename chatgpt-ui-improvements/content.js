@@ -627,6 +627,11 @@ function addBulkDeleteButton() {
     removeCheckboxes();
     removeBulkDeleteButton();
     console.log("Bulk delete mode cancelled via page button");
+    // Double reload using localStorage flag
+    localStorage.setItem('doubleReload', 'pending');
+    setTimeout(() => {
+      window.location.reload();
+    }, 500);
   };
 
   // Add both buttons to the page
