@@ -51,7 +51,50 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
       );
 
       if (optionsBtn) {
-        optionsBtn.click();
+        // Scroll message into view and simulate mouse hover
+        msg.scrollIntoView({ block: "center", behavior: "instant" });
+        ["pointerover", "mouseenter", "mouseover"].forEach((evtType) => {
+          const evt = new MouseEvent(evtType, {
+            bubbles: true,
+            cancelable: true,
+            view: window,
+            relatedTarget: null,
+          });
+          msg.dispatchEvent(evt);
+          // Also dispatch on all child elements
+          msg.querySelectorAll("*").forEach((child) => {
+            child.dispatchEvent(evt);
+          });
+        });
+        // Ensure the button is visible and enabled
+        optionsBtn.focus();
+        // Dispatch PointerEvent with pointerType 'mouse'
+        const pointerEvt = new PointerEvent("pointerdown", {
+          bubbles: true,
+          cancelable: true,
+          pointerType: "mouse",
+          view: window,
+        });
+        optionsBtn.dispatchEvent(pointerEvt);
+        // Simulate pointerdown, mousedown, mouseup, and click events
+        ["mousedown", "mouseup", "click"].forEach((evtType) => {
+          const evt = new MouseEvent(evtType, {
+            bubbles: true,
+            cancelable: true,
+            view: window,
+          });
+          optionsBtn.dispatchEvent(evt);
+        });
+        // Send Enter keypress as a fallback
+        const enterEvt = new KeyboardEvent("keydown", {
+          bubbles: true,
+          cancelable: true,
+          key: "Enter",
+          code: "Enter",
+          keyCode: 13,
+        });
+        optionsBtn.dispatchEvent(enterEvt);
+        // Increase delay to give menu time to open
         setTimeout(() => {
           const allMenuButtons = document.querySelectorAll(
             '[role="menuitem"], [data-testid*="delete"], button[data-testid*="menu"]'
@@ -82,22 +125,37 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
           );
 
           if (deleteBtn) {
-            deleteBtn.click();
-            setTimeout(() => {
+            // Simulate a real user click, the .click() doesn't work
+            ["mousedown", "mouseup", "click"].forEach((evtType) => {
+              const evt = new MouseEvent(evtType, {
+                bubbles: true,
+                cancelable: true,
+                view: window,
+              });
+              deleteBtn.dispatchEvent(evt);
+            });
+            // Retry loop for confirmation button
+            let confirmTries = 0;
+            const maxTries = 20; // 20 x 100ms = 2s
+            function tryConfirm() {
               const confirmButton = document.querySelector(
                 '[data-testid="delete-conversation-confirm-button"]'
               );
               if (confirmButton) {
                 confirmButton.click();
                 console.log(`Confirmed deletion for message ID: ${messageId}`);
+                setTimeout(() => deleteNextMessage(index + 1), 400);
+              } else if (confirmTries < maxTries) {
+                confirmTries++;
+                setTimeout(tryConfirm, 100);
               } else {
                 console.log(
-                  `Confirmation button not found for message ID: ${messageId}`
+                  `Confirmation button not found for message ID: ${messageId} after retrying.`
                 );
+                setTimeout(() => deleteNextMessage(index + 1), 400);
               }
-              // Wait for DOM to update before next deletion
-              setTimeout(() => deleteNextMessage(index + 1), 400);
-            }, 120);
+            }
+            tryConfirm();
           } else {
             console.log(`Delete button not found for message ID: ${messageId}`);
             setTimeout(() => deleteNextMessage(index + 1), 400);
