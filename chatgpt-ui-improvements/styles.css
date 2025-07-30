@@ -1,0 +1,157 @@
+/* Popup Styles */
+.popup-container {
+  width: 300px;
+  padding: 20px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.popup-container h2 {
+  margin: 0 0 10px 0;
+  font-size: 18px;
+  color: #333;
+  text-align: center;
+}
+
+.popup-container p {
+  margin: 0 0 15px 0;
+  font-size: 14px;
+  color: #666;
+  line-height: 1.4;
+}
+
+.popup-bulk-delete-btn {
+  width: 100%;
+  background: #d32f2f;
+  color: #fff;
+  border: none;
+  padding: 12px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 15px;
+  transition: background-color 0.2s;
+}
+
+.popup-bulk-delete-btn:hover {
+  background: #b71c1c;
+}
+
+.popup-bulk-delete-btn:active {
+  background: #a01c1c;
+}
+
+.popup-cancel-btn {
+  width: 100%;
+  background: #666;
+  color: #fff;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 15px;
+  transition: background-color 0.2s;
+  display: none;
+}
+
+.popup-cancel-btn:hover {
+  background: #555;
+}
+
+.popup-cancel-btn:active {
+  background: #444;
+}
+
+.popup-cancel-btn.show {
+  display: block;
+}
+
+.instructions {
+  background: #f5f5f5;
+  padding: 15px;
+  border-radius: 6px;
+  border-left: 4px solid #2196f3;
+}
+
+.instructions p {
+  margin: 0 0 10px 0;
+  font-weight: 600;
+  color: #333;
+}
+
+.instructions ol {
+  margin: 0;
+  padding-left: 20px;
+  color: #666;
+}
+
+.instructions li {
+  font-size: 13px;
+  line-height: 1.4;
+  margin-bottom: 4px;
+}
+
+/* Content Script Injected Button Styles */
+.bulk-delete-btn {
+  position: fixed;
+  top: 80px;
+  right: 40px;
+  z-index: 9999;
+  background: #d32f2f;
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.bulk-delete-btn:hover {
+  background: #b71c1c;
+}
+
+.cancel-bulk-delete-btn {
+  position: fixed;
+  top: 120px;
+  right: 40px;
+  z-index: 9999;
+  background: #666;
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.cancel-bulk-delete-btn:hover {
+  background: #555;
+}
+
+.bulk-delete-checkbox {
+  margin-right: 8px;
+  accent-color: #007acc;
+}
+
+.bulk-delete-checkbox-wrapper {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 3px;
+  border: 1px solid #ddd;
+  width: 22px;
+  height: 22px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.bulk-delete-checkbox-wrapper:hover {
+  background: rgba(255, 255, 255, 1);
+  border-color: #007acc;
+  box-shadow: 0 1px 5px rgba(0, 122, 204, 0.2);
+}
