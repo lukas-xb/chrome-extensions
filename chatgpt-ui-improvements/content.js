@@ -40,6 +40,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
       const msg = selectedMessages[index];
       
       // Try multiple selectors to find the options button
+      //TODO - refactor - remove unncessary checks
       const optionsBtn = 
         msg.querySelector('button[data-testid^="history-item-"][data-testid$="-options"]') ||
         msg.querySelector('button[data-testid*="options"]') ||
@@ -554,6 +555,7 @@ function addBulkDeleteButton() {
             }, 100);
         }, 100);
         
+        // TODO - validate this is not faster
         // Remove the old setTimeout that was looking for delete button immediately
         // setTimeout(() => {
         //   const allMenuButtons = document.querySelectorAll(
