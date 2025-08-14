@@ -10,9 +10,13 @@ Periodically checks for predefined collection of tabs. If the tab was open for a
 
 Allows user to scrape website page content into a markdown file and upload the file into RAG application. The extension is intentionally not packaged into .crx file so that everyone can inspect the code and uses a default "hi" icon. (Built with GHCopilot.)
 
+## ChatGPT UI improvements
+
+Enhances the ChatGPT web interface and adds the ability to delete multiple ChatGPT chats in bulk. This extension helps users clean up their ChatGPT conversation history with just a few clicks.
+
 ### Installation
 
-1. Download the folder `chrome-extensions-autoclose-tab`.
+1. Download the folder, e.g., `chrome-extensions-autoclose-tab`.
 2. Go to `Extensions` tab in Chrome (or other Chromium-based browser).
 3. Enable `Developer mode` in the top-right corner.
 4. Select `Load unpacked` in the top left corner.
